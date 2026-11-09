@@ -538,79 +538,19 @@ initCallbackPage();
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script></body></html>
 
-<style id="imperial-hamburger-fix">
-/* Keep the mobile menu button above decorative and sticky layers */
-header.top{position:sticky!important;top:0!important;z-index:10001!important;isolation:isolate}
-header.top .top-actions{position:relative!important;z-index:10002!important}
-header.top .menu-trigger{position:relative!important;z-index:10003!important;pointer-events:auto!important;touch-action:manipulation!important;-webkit-tap-highlight-color:transparent;min-width:64px;min-height:48px}
-header.top .menu-trigger small{pointer-events:none}
-</style>
-<script id="imperial-hamburger-fix-js">
-document.addEventListener('DOMContentLoaded',function(){
-  const trigger=document.querySelector('header.top .menu-trigger');
-  if(!trigger)return;
-  trigger.removeAttribute('onclick');
-  trigger.addEventListener('click',function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    if(typeof window.toggleDrawer==='function') window.toggleDrawer();
-    else {
-      const drawer=document.getElementById('drawer');
-      const backdrop=document.getElementById('drawerBackdrop');
-      if(!drawer||!backdrop)return;
-      const open=!drawer.classList.contains('open');
-      drawer.classList.toggle('open',open);
-      backdrop.classList.toggle('open',open);
-      document.body.classList.toggle('drawer-open',open);
-      trigger.setAttribute('aria-expanded',String(open));
-    }
-  });
-});
-</script>
 
-
-<style id="imperial-drawer-interaction-polish">
-/* Drawer stays above the page and remains touch-scrollable on iPhone */
-.drawer{z-index:10010!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;pointer-events:auto!important;touch-action:pan-y}
+<style id="imperial-drawer-reliable-fix">
+.drawer{z-index:10010!important;overflow-y:auto!important;overflow-x:hidden!important;pointer-events:auto!important;overscroll-behavior:contain}
 .drawer-backdrop{z-index:10009!important}
 header.top{z-index:10001!important}
-.drawer>a,.drawer>button,.drawer .close-drawer,.drawer-submenu a{
- position:relative;isolation:isolate;overflow:hidden;min-height:48px;
- transition:transform .2s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease!important;
- -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+.drawer>a,.drawer>button,.drawer-submenu a,.drawer .close-drawer{
+ position:relative;min-height:48px;cursor:pointer;touch-action:manipulation;
+ transition:transform .2s ease,box-shadow .25s ease,border-color .25s ease,filter .25s ease!important;
+ -webkit-tap-highlight-color:transparent
 }
-.drawer>a:before,.drawer>button:before,.drawer .close-drawer:before,.drawer-submenu a:before{
- content:"";position:absolute;inset:0;left:-120%;width:65%;
- background:linear-gradient(105deg,transparent,rgba(215,180,106,.22),transparent);
- transform:skewX(-18deg);transition:left .55s ease;pointer-events:none;z-index:-1;
+.drawer>a:active,.drawer>button:active,.drawer-submenu a:active,.drawer .close-drawer:active{
+ transform:scale(.97);filter:brightness(1.12);box-shadow:0 0 0 2px #d7b46a55,0 8px 22px #80602a22
 }
-.drawer>a:active,.drawer>button:active,.drawer .close-drawer:active,.drawer-submenu a:active{
- transform:scale(.97);box-shadow:0 0 0 2px rgba(215,180,106,.28),0 8px 22px rgba(120,83,24,.15);
-}
-.drawer>a:active:before,.drawer>button:active:before,.drawer .close-drawer:active:before,.drawer-submenu a:active:before{left:130%}
-@media(hover:hover){
- .drawer>a:hover,.drawer>button:hover,.drawer-submenu a:hover{transform:translateX(-3px);border-color:#c6a15c;box-shadow:0 7px 20px rgba(120,83,24,.13)}
- .drawer>a:hover:before,.drawer>button:hover:before,.drawer-submenu a:hover:before{left:130%}
-}
+.drawer>a:focus-visible,.drawer>button:focus-visible,.drawer-submenu a:focus-visible,.drawer .close-drawer:focus-visible{outline:2px solid #d7b46a;outline-offset:3px}
+@media(hover:hover){.drawer>a:hover,.drawer>button:hover,.drawer-submenu a:hover{transform:translateX(-3px);border-color:#c6a15c;box-shadow:0 7px 20px #78531820;filter:brightness(1.06)}}
 </style>
-<script id="imperial-drawer-delegated-controls">
-document.addEventListener('click',function(e){
- const drawer=document.getElementById('drawer');
- if(!drawer||!drawer.contains(e.target))return;
- const close=e.target.closest('.close-drawer');
- const category=e.target.closest('.drawer-menu-toggle');
- const link=e.target.closest('a[href]');
- const admin=e.target.closest('button[onclick*="openAdminGate"]');
- if(!close&&!category&&!link&&!admin)return;
- e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
- if(close){window.toggleDrawer(false);return;}
- if(category){const sub=document.getElementById('drawerMenuCategories');const chev=document.getElementById('menuChevron');const opened=!sub.classList.contains('open');sub.classList.toggle('open',opened);chev.textContent=opened?'−':'＋';return;}
- if(admin){window.toggleDrawer(false);window.openAdminGate();return;}
- if(link){
-   const href=link.getAttribute('href');
-   window.toggleDrawer(false);
-   if(href&&href.startsWith('#')){const target=document.querySelector(href);if(target)requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));}
-   else if(href)window.open(href,link.target||'_self');
- }
-},true);
-</script>
