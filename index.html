@@ -373,6 +373,19 @@ body.admin-mode .admin-block:nth-of-type(2){animation-delay:.05s}body.admin-mode
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style><style id="imperial-callback-treated">
 .callback-treated{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #d9c9aa;border-radius:20px;background:#f8f3e9;color:#70552a;font-size:13px;cursor:pointer}.callback-treated input{width:18px;height:18px;accent-color:#98743a}
+</style><style id="imperial-visible-motion-fix">
+.hero{isolation:isolate}
+.hero:before{animation:imperialVisibleGlow 7s ease-in-out infinite alternate!important}
+.hero-logo{animation:imperialVisibleFloat 3.2s ease-in-out infinite!important}
+.hero h1{animation:imperialVisibleShine 4s ease-in-out infinite!important}
+.hero .actions .btn:first-child{position:relative;overflow:hidden;animation:imperialButtonPulse 2.8s ease-in-out infinite}
+.hero .actions .btn:first-child:after{content:"";position:absolute;inset:-30% auto -30% -55%;width:35%;background:linear-gradient(90deg,transparent,#fff8,transparent);transform:skewX(-22deg);animation:imperialButtonShine 3.6s ease-in-out infinite;pointer-events:none}
+@keyframes imperialVisibleGlow{0%{opacity:.35}100%{opacity:.9;filter:blur(8px)}}
+@keyframes imperialVisibleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes imperialVisibleShine{0%,100%{filter:drop-shadow(0 0 0 #d7b46a00)}50%{filter:drop-shadow(0 0 12px #d7b46a88)}}
+@keyframes imperialButtonPulse{0%,100%{box-shadow:0 0 0 0 #d7b46a00}50%{box-shadow:0 0 0 7px #d7b46a22}}
+@keyframes imperialButtonShine{0%,65%{left:-55%}100%{left:130%}}
+@media(prefers-reduced-motion:reduce){.hero-logo,.hero h1,.hero:before,.hero .actions .btn:first-child,.hero .actions .btn:first-child:after{animation-duration:5s!important;animation-iteration-count:infinite!important}}
 </style></head><body>
 <header class="top"><div class="top-actions"><button type="button" class="menu-trigger" onclick="toggleDrawer()" aria-label="פתיחת תפריט" aria-controls="drawer" aria-expanded="false">☰<small>תפריט</small></button><a class="btn outline" href="https://wa.me/972508302916" target="_blank" rel="noopener">WhatsApp</a></div></header>
 <section class="hero" id="home"><div><div class="eyebrow">IMPERIAL · אירועים בלתי נשכחים</div><h1>אולמי אימפריאל</h1><p>האירוע שלכם. האווירה שלנו. חוויה יוקרתית ומוקפדת לכל פרט — משלב התכנון ועד הרגע האחרון.</p><div class="actions"><a class="btn" href="#booking">לתיאום אירוע והצעת מחיר</a><a class="btn outline" href="https://wa.me/972508302916" target="_blank" rel="noopener">דברו איתנו בוואטסאפ</a></div></div></section>
