@@ -386,6 +386,12 @@ body.admin-mode .admin-block:nth-of-type(2){animation-delay:.05s}body.admin-mode
 @keyframes imperialButtonPulse{0%,100%{box-shadow:0 0 0 0 #d7b46a00}50%{box-shadow:0 0 0 7px #d7b46a22}}
 @keyframes imperialButtonShine{0%,65%{left:-55%}100%{left:130%}}
 @media(prefers-reduced-motion:reduce){.hero-logo,.hero h1,.hero:before,.hero .actions .btn:first-child,.hero .actions .btn:first-child:after{animation-duration:5s!important;animation-iteration-count:infinite!important}}
+</style><style id="imperial-site-wave">
+/* A slow champagne-gold wave travels across the entire page */
+body{position:relative;isolation:isolate}
+body:before{content:"";position:fixed;z-index:15;pointer-events:none;inset:-35% -70%;opacity:0;background:linear-gradient(112deg,transparent 35%,rgba(215,180,106,0) 42%,rgba(243,223,170,.075) 48%,rgba(255,248,225,.13) 50%,rgba(215,180,106,.075) 52%,rgba(215,180,106,0) 58%,transparent 65%);transform:translateX(-65%) skewX(-12deg);animation:imperialPageWave 9s ease-in-out infinite}
+@keyframes imperialPageWave{0%,12%{transform:translateX(-65%) skewX(-12deg);opacity:0}28%{opacity:1}62%{transform:translateX(65%) skewX(-12deg);opacity:.9}78%,100%{transform:translateX(75%) skewX(-12deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){body:before{animation:none;display:none}}
 </style></head><body>
 <header class="top"><div class="top-actions"><button type="button" class="menu-trigger" onclick="toggleDrawer()" aria-label="פתיחת תפריט" aria-controls="drawer" aria-expanded="false">☰<small>תפריט</small></button><a class="btn outline" href="https://wa.me/972508302916" target="_blank" rel="noopener">WhatsApp</a></div></header>
 <section class="hero" id="home"><div><div class="eyebrow">IMPERIAL · אירועים בלתי נשכחים</div><h1>אולמי אימפריאל</h1><p>האירוע שלכם. האווירה שלנו. חוויה יוקרתית ומוקפדת לכל פרט — משלב התכנון ועד הרגע האחרון.</p><div class="actions"><a class="btn" href="#booking">לתיאום אירוע והצעת מחיר</a><a class="btn outline" href="https://wa.me/972508302916" target="_blank" rel="noopener">דברו איתנו בוואטסאפ</a></div></div></section>
