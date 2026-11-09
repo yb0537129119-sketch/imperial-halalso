@@ -306,6 +306,18 @@ input::placeholder,textarea::placeholder{color:#8d806d}
 #imperialToast{background:linear-gradient(135deg,#f5eddf,#e7dcc8);color:#49391f}
 .drawer-brand small,.drawer-note{color:#766b5a}
 
+
+/* Compact the intro feature strip above event details */
+.features{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:620px;margin:0 auto}
+.feature{padding:10px 8px;border-radius:12px}
+.feature span{font-size:19px;margin-bottom:2px}
+.feature b{font-size:13px;display:block}
+.feature small{font-size:11px;line-height:1.35}
+.section:has(>.features){padding-top:20px;padding-bottom:20px}
+.section:has(>.features) .section-title{font-size:21px;margin-bottom:5px}
+.section:has(>.features) .section-sub{font-size:13px;margin-bottom:12px}
+@media(max-width:420px){.features{gap:7px}.feature{padding:9px 6px}.feature span{font-size:17px}.feature b{font-size:12px}.feature small{font-size:10px}}
+
 </style><style id="imperial-v11-refinements">
 /* Imperial v11 — bright champagne visual refinement; functionality preserved */
 :root{--gold:#b89450;--gold2:#8f6c2e;--black:#29251e;--panel:#fff;--line:#e8dfcf;--cream:#fbf8f1;--ink:#302b23;--muted:#756d60}
