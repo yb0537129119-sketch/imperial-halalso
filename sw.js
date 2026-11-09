@@ -1,4 +1,4 @@
-const CACHE='imperial-halls-v12';
+const CACHE='imperial-halls-v13';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg','./imperial-logo.png','./ballroom-bg.jpg'];
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
@@ -30,4 +30,18 @@ self.addEventListener('fetch', event => {
       throw error;
     }
   })());
+});
+
+self.addEventListener('push',event=>{
+ let data={title:"אולמי אימפריאל",body:"התקבלה בקשת חזרה חדשה",url:"/"};
+ try{if(event.data)data={...data,...event.data.json()};}catch(e){}
+ event.waitUntil(self.registration.showNotification(data.title,{body:data.body,icon:"./icon.svg",badge:"./icon.svg",data:{url:data.url||"/"},tag:"imperial-callback",renotify:true}));
+});
+self.addEventListener('notificationclick',event=>{
+ event.notification.close();
+ const target=new URL(event.notification.data?.url||"/",self.location.origin).href;
+ event.waitUntil(self.clients.matchAll({type:"window",includeUncontrolled:true}).then(list=>{
+  for(const client of list){if(new URL(client.url).origin===self.location.origin){client.navigate(target);return client.focus();}}
+  return self.clients.openWindow(target);
+ }));
 });
