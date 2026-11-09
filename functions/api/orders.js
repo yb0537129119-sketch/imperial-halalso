@@ -1,3 +1,4 @@
+import { sendPushToAll } from "./_push.js";
 const json = (data, status = 200) => new Response(JSON.stringify(data), {
   status, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" }
 });
@@ -20,6 +21,7 @@ export async function onRequestPost({ request, env }) {
         VALUES (?, ?, ?, 'חדש', ?, ?, '', 'בקשת חזרה', NULL, NULL, ?, '', ?, '[]', NULL)`)
         .bind(id, orderNumber, createdAt, clean(d.name,120), clean(d.phone,40), topic, notes).run();
     } catch (e) { return json({success:false,error:"D1 insert failed: "+clean(e.message,300)},500); }
+    try { await sendPushToAll(env,{title:"בקשת חזרה חדשה — אולמי אימפריאל",body:clean(d.name,100)+" · "+clean(d.phone,40),url:"/"}); } catch(e) { /* notification failure must not block lead capture */ }
     let emailSent=false,emailError="";
     if(env.RESEND_API_KEY){
       try {
