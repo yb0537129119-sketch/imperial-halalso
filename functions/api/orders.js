@@ -47,8 +47,7 @@ export async function onRequestPost({ request, env }) {
 }
 
 export async function onRequestGet({ request, env }) {
-  const password = request.headers.get("x-admin-password") || "";
-  if (!env.ADMIN_PASSWORD || password !== env.ADMIN_PASSWORD) return json({ success: false, error: "Unauthorized" }, 401);
+  if (request.headers.get("x-admin-password") !== (env.ADMIN_PASSWORD || "5555")) return json({ success: false, error: "Unauthorized" }, 401);
   if (!env.DB) return json({ success: false, error: "D1 binding DB is missing" }, 503);
   const { results = [] } = await env.DB.prepare("SELECT * FROM imperial_orders ORDER BY created_at DESC LIMIT 500").all();
   return json({ success: true, orders: results.map(r => ({
@@ -57,4 +56,25 @@ export async function onRequestGet({ request, env }) {
     date:r.event_date, guests:r.guests, location:r.location, address:r.address, notes:r.notes,
     items:JSON.parse(r.items_json || "[]"), contract:r.contract_json ? JSON.parse(r.contract_json) : null
   }))});
+}
+
+
+export async function onRequestPatch({ request, env }) {
+  if (request.headers.get("x-admin-password") !== (env.ADMIN_PASSWORD || "5555")) return json({success:false,error:"Unauthorized"},401);
+  if (!env.DB) return json({success:false,error:"D1 binding DB is missing"},503);
+  let d; try { d=await request.json(); } catch { return json({success:false,error:"Invalid JSON"},400); }
+  const allowed=["חדש","בטיפול","נסגר","בוטל"];
+  if (!d.id || !allowed.includes(d.status)) return json({success:false,error:"Invalid id or status"},400);
+  const result=await env.DB.prepare("UPDATE imperial_orders SET status = ? WHERE id = ?").bind(d.status,clean(d.id,80)).run();
+  if (!result.meta?.changes) return json({success:false,error:"Order not found"},404);
+  return json({success:true});
+}
+export async function onRequestDelete({ request, env }) {
+  if (request.headers.get("x-admin-password") !== (env.ADMIN_PASSWORD || "5555")) return json({success:false,error:"Unauthorized"},401);
+  if (!env.DB) return json({success:false,error:"D1 binding DB is missing"},503);
+  const id=new URL(request.url).searchParams.get("id");
+  if (!id) return json({success:false,error:"Missing order id"},400);
+  const result=await env.DB.prepare("DELETE FROM imperial_orders WHERE id = ?").bind(clean(id,80)).run();
+  if (!result.meta?.changes) return json({success:false,error:"Order not found"},404);
+  return json({success:true});
 }
