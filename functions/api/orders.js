@@ -7,6 +7,30 @@ export async function onRequestPost({ request, env }) {
   if (!env.DB) return json({ success: false, error: "D1 binding DB is missing" }, 503);
   let d;
   try { d = await request.json(); } catch { return json({ success: false, error: "Invalid JSON" }, 400); }
+  if (d.lead === true) {
+    if (!d.name || !d.phone) return json({success:false,error:"יש למלא שם וטלפון"},400);
+    const id = "lead-" + (crypto.randomUUID ? crypto.randomUUID() : Date.now());
+    const orderNumber = Date.now();
+    const createdAt = new Date().toISOString();
+    const topic = clean(d.topic || "בקשה לשיחה עם נציג", 300);
+    const notes = clean(d.notes || "", 1500);
+    try {
+      await env.DB.prepare(`INSERT INTO imperial_orders
+        (id, order_number, created_at, status, customer_name, customer_phone, customer_email, event_type, event_date, guests, location, address, notes, items_json, contract_json)
+        VALUES (?, ?, ?, 'חדש', ?, ?, '', 'בקשת חזרה', NULL, NULL, ?, '', ?, '[]', NULL)`)
+        .bind(id, orderNumber, createdAt, clean(d.name,120), clean(d.phone,40), topic, notes).run();
+    } catch (e) { return json({success:false,error:"D1 insert failed: "+clean(e.message,300)},500); }
+    let emailSent=false,emailError="";
+    if(env.RESEND_API_KEY){
+      try {
+        const safe=v=>clean(v,1800).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+        const html='<div dir="rtl" style="font-family:Arial;background:#f4efe5;padding:24px;color:#30291f"><div style="max-width:560px;margin:auto;background:#fffdf8;border:1px solid #e5d8c0;border-radius:16px;overflow:hidden"><div style="background:#302719;padding:20px;text-align:center;color:#ffe8b0"><b>IMPERIAL HALLS</b><h2>בקשה חדשה לחזרה ללקוח</h2></div><div style="padding:22px;line-height:2"><b>שם:</b> '+safe(d.name)+'<br><b>טלפון:</b> '+safe(d.phone)+'<br><b>תחום עניין:</b> '+safe(topic)+'<br><b>הערות:</b> '+safe(notes||"אין")+'<br><b>התקבל:</b> '+safe(createdAt)+'</div></div></div>';
+        const mail=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json"},body:JSON.stringify({from:"Imperial Website <onboarding@resend.dev>",to:["yehudaa148@gmail.com"],subject:"בקשת חזרה חדשה — "+clean(d.name,100),html,text:"בקשת חזרה חדשה\\nשם: "+clean(d.name,120)+"\\nטלפון: "+clean(d.phone,40)+"\\nתחום עניין: "+topic+"\\nהערות: "+notes})});
+        const result=await mail.json().catch(()=>({}));emailSent=mail.ok;if(!mail.ok)emailError=clean(result.message||result.name||"Resend failed",250);
+      } catch(e){emailError=clean(e.message,250);}
+    } else emailError="RESEND_API_KEY is not configured";
+    return json({success:true,id,emailSent,emailError});
+  }
   if (!d.name || !d.phone || !d.email || !d.eventType || !d.date) return json({ success: false, error: "Missing required order fields" }, 400);
   const id = clean(d.id, 80);
   const orderNumber = Number(d.orderNumber);
