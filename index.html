@@ -251,6 +251,23 @@ input,select,textarea{background:#fdfbf7!important;border-color:#d4c9b8!importan
 .notice{background:#eee5d5!important;border-color:#dfcfb2!important}
 .bottom-nav{background:rgba(246,242,234,.97)!important;border-top-color:#d9cdbb!important}
 
+
+/* UX fix: keep the order summary in the page flow, never floating over content */
+.summary{
+ position:static!important;left:auto!important;right:auto!important;bottom:auto!important;
+ z-index:auto!important;width:100%!important;max-width:680px;margin:24px auto 0!important;
+ background:#eee7da!important;color:#29251f!important;border:1px solid #d8c9ad!important;
+ border-radius:16px!important;box-shadow:0 6px 18px #46351d0b!important;
+ backdrop-filter:none!important
+}
+.summary strong{color:#80612f!important}
+#booking{padding-bottom:32px!important}
+@media(max-width:520px){
+ .summary{width:100%!important;left:auto!important;right:auto!important;bottom:auto!important;
+ padding:12px!important;flex-wrap:wrap}
+ .summary .btn{flex-shrink:0}
+}
+
 </style><style id="imperial-v11-refinements">
 /* Imperial v11 — bright champagne visual refinement; functionality preserved */
 :root{--gold:#b89450;--gold2:#8f6c2e;--black:#29251e;--panel:#fff;--line:#e8dfcf;--cream:#fbf8f1;--ink:#302b23;--muted:#756d60}
