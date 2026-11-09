@@ -272,6 +272,40 @@ input,select,textarea{background:#fdfbf7!important;border-color:#d4c9b8!importan
 /* Calendar and two-column salad selection */
 #menu-salads .items[data-group="salads"]{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px}
 .calendar-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0}.calendar-toolbar button{border:1px solid #d6c49e;background:#fffaf0;color:#765827;border-radius:10px;padding:8px 13px;font-weight:700}.calendar-title{font-weight:800;color:#765827;text-align:center}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;direction:rtl}.calendar-weekday{text-align:center;font-size:12px;font-weight:800;color:#8b7040;padding:6px 0}.calendar-day{min-height:76px;border:1px solid #e8dfcf;border-radius:10px;background:#fffdf9;padding:5px;min-width:0;overflow:hidden}.calendar-day.empty{background:transparent;border-color:transparent}.calendar-day.today{border:2px solid #bd9854;background:#fbf3e3}.calendar-day-number{font-size:12px;font-weight:800;color:#6d552c}.calendar-event{display:block;width:100%;margin-top:4px;border:0;border-radius:6px;padding:4px 3px;background:#efe4ce;color:#59421e;text-align:right;font-size:10px;line-height:1.25;white-space:normal;overflow-wrap:anywhere;cursor:pointer}.calendar-event.closed{background:#e3eddf;color:#355b32}@media(max-width:520px){.calendar-grid{gap:3px}.calendar-day{min-height:66px;padding:3px;border-radius:7px}.calendar-day-number,.calendar-weekday{font-size:10px}.calendar-event{font-size:9px;padding:3px 2px}}
+
+/* Imperial v11 — slightly deeper champagne palette */
+:root{--gold:#a97d32;--gold2:#805d25;--black:#eee8dc;--panel:#f8f4eb;--line:#d6c8ad;--cream:#f1eadc}
+html{background:#eee8dc}
+body{background:linear-gradient(180deg,#f2ede3 0%,#e9e1d3 52%,#f1eadf 100%);color:#30291f}
+.top{background:rgba(244,238,226,.96);border-bottom-color:#d5c5a6}
+.hero{background:linear-gradient(180deg,rgba(35,29,20,.58),rgba(35,29,20,.72)),url('ballroom-bg.jpg') center 48%/cover no-repeat,linear-gradient(135deg,#302719,#51432e 48%,#282116)}
+.feature,.panel,.category{background:linear-gradient(160deg,#f8f4eb,#eee6d8);border-color:#d8c9ad;color:#443a2b}
+.menu-group{background:#f5efe4;border-color:#d8c9ad}
+.item{background:#eee7da;border-color:#d6c8b2;color:#393126}
+.item:has(input:checked){background:linear-gradient(110deg,#e8dcc5,#f6efe2)}
+input,select,textarea{background:#f8f4ec;color:#30291f;border-color:#cbb994}
+input::placeholder,textarea::placeholder{color:#8d806d}
+.summary{background:rgba(241,234,221,.97);color:#30291f;border-color:#c4a66d;box-shadow:0 10px 30px #57432122}
+.bottom-nav{background:rgba(239,232,219,.97);border-top-color:#cbb88f}
+.bottom-nav a{color:#70562d}
+.foot{color:#746b5e;border-top-color:#d7c9b2}
+.drawer{background:linear-gradient(180deg,#f3ecdf,#e6dccb);border-left-color:#b58a3b;box-shadow:-20px 0 70px #57432133}
+.drawer>a,.drawer>button{background:#eee5d5;border-color:#d0bea0;color:#805d25}
+.drawer>a span,.drawer>button span{color:#393126}
+.drawer-submenu a{background:#f7f1e7;border-color:#d8c9ad;color:#634a25}
+.order-card{background:linear-gradient(145deg,#f8f3e9,#eae1d2);border-color:#d0bd9a;color:#30291f}
+.order-card p{color:#51483b}
+.stat{background:#eee6d8;border-color:#d5c5a6}
+.stat small{color:#756a59}
+.admin-row{background:#f4eee3;border-color:#d5c5a6}
+.gate{background:#30291fcc}
+.gate-card{background:linear-gradient(160deg,#f8f3e9,#e9dfce);color:#30291f}
+.gate-card p,.gate-card small{color:#746957}
+.menu-trigger{background:#eee5d5;color:#805d25;border-color:#c5a66d}
+#backTop{background:#eee5d5;color:#805d25;box-shadow:0 8px 25px #57432122}
+#imperialToast{background:linear-gradient(135deg,#f5eddf,#e7dcc8);color:#49391f}
+.drawer-brand small,.drawer-note{color:#766b5a}
+
 </style><style id="imperial-v11-refinements">
 /* Imperial v11 — bright champagne visual refinement; functionality preserved */
 :root{--gold:#b89450;--gold2:#8f6c2e;--black:#29251e;--panel:#fff;--line:#e8dfcf;--cream:#fbf8f1;--ink:#302b23;--muted:#756d60}
