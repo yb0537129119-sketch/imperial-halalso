@@ -1,4 +1,4 @@
-const CACHE='imperial-halls-v9';
+const CACHE='imperial-halls-v10';
 const ASSETS=['./','./index.html','./manifest.webmanifest','./icon.svg','./imperial-logo.png','./ballroom-bg.jpg'];
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
