@@ -27,7 +27,7 @@ export async function onRequestPost({ request, env }) {
       try {
         const safe=v=>clean(v,1800).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
         const html='<div dir="rtl" style="font-family:Arial;background:#f4efe5;padding:24px;color:#30291f"><div style="max-width:560px;margin:auto;background:#fffdf8;border:1px solid #e5d8c0;border-radius:16px;overflow:hidden"><div style="background:#302719;padding:20px;text-align:center;color:#ffe8b0"><b>IMPERIAL HALLS</b><h2>בקשה חדשה לחזרה ללקוח</h2></div><div style="padding:22px;line-height:2"><b>שם:</b> '+safe(d.name)+'<br><b>טלפון:</b> '+safe(d.phone)+'<br><b>תחום עניין:</b> '+safe(topic)+'<br><b>הערות:</b> '+safe(notes||"אין")+'<br><b>התקבל:</b> '+safe(createdAt)+'</div></div></div>';
-        const mail=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json"},body:JSON.stringify({from:"Imperial Website <onboarding@resend.dev>",to:["yehudaa148@gmail.com","Yairifrach.ab@gmail.com"],subject:"בקשת חזרה חדשה — "+clean(d.name,100),html,text:"בקשת חזרה חדשה\\nשם: "+clean(d.name,120)+"\\nטלפון: "+clean(d.phone,40)+"\\nתחום עניין: "+topic+"\\nהערות: "+notes})});
+        const mail=await fetch("https://api.resend.com/emails",{method:"POST",headers:{Authorization:"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json"},body:JSON.stringify({from:"Imperial Website <onboarding@resend.dev>",to:["yehudaa148@gmail.com"],subject:"בקשת חזרה חדשה — "+clean(d.name,100),html,text:"בקשת חזרה חדשה\\nשם: "+clean(d.name,120)+"\\nטלפון: "+clean(d.phone,40)+"\\nתחום עניין: "+topic+"\\nהערות: "+notes})});
         const result=await mail.json().catch(()=>({}));emailSent=mail.ok;if(!mail.ok)emailError=clean(result.message||result.name||"Resend failed",250);
       } catch(e){emailError=clean(e.message,250);}
     } else emailError="RESEND_API_KEY is not configured";
@@ -81,7 +81,7 @@ export async function onRequestPost({ request, env }) {
         method: "POST", headers: { Authorization: "Bearer " + env.RESEND_API_KEY, "Content-Type": "application/json" },
         body: JSON.stringify({
           from: "Imperial Website <onboarding@resend.dev>",
-          to: ["yehudaa148@gmail.com", "Yairifrach.ab@gmail.com"],
+          to: ["yehudaa148@gmail.com"],
           subject: "✦ הזמנה חדשה מאולמי אימפריאל #" + orderNumber + " — " + clean(d.name,100),
           html: htmlBody,
           text: textLines.join("\\n")
